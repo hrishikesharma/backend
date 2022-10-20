@@ -79,10 +79,24 @@
 
 
 const express = require("express")
+const memesList = require("./memeResource")
 const server = express();
 
+server.get("/meme", (req, res) => {
+    const list = [...memesList]
+    const randomIndex = Math.floor(Math.random() * list.length)
+    res.send(`<img src="${list[randomIndex]}">`)
+})
+
 server.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('<h1>Hello World!</h>')
   })
 
-server.listen(3000, ()=>console.log("Server started on port 300"));
+server.get("/meme/:id", (req, res) => {
+    const list = [...memesList]
+    const randomIndex = req.params.id
+    res.send(`<img src="${list[randomIndex]}">`)
+})
+
+
+server.listen(3000, ()=>console.log("Server started on port 3000"));
